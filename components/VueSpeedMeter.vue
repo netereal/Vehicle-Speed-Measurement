@@ -2,12 +2,15 @@
   <div class="main-container">
     <svg class="svg-container">
 
-      <circle
+      <svgSpeedIcon v-if="ifSpeed"/>
+      <svgRpmIcon v-if="ifRpm"/>
+<!--      <SpeedSVG />-->
+<!--      <circle
       class="outer-circle"
       :r="outerCircleRadius"
       :cx="centerPoint"
       :cy="centerPoint"
-      />
+      />-->
 
       <polygon
         :key="customCurrentValue"
@@ -34,12 +37,16 @@
         :r="needleCircleRadius"
         :cx="centerPoint"
         :cy="centerPoint"
+        fill="url(#linear)"
       />
     </svg>
   </div>
 </template>
 
 <script>
+/*import SpeedSVG from '../src/assets/SPEED.svg';*/
+import svgSpeedIcon from "./svg-speed-icon.vue";
+import svgRpmIcon from "./svg-rpm-icon.vue";
 export default {
   name: "VueSpeedMeter",
   props: {
@@ -57,6 +64,10 @@ export default {
       type: Boolean,
       default: true,
     },
+/*    speedOrRpm:{
+      type: Number,
+      default: 1,
+    },*/
   },
   data: function () {
     return {
@@ -65,15 +76,22 @@ export default {
       scaleStartValue: this.customValues.scaleStartValue || 0,
       scaleStep: this.customValues.scaleStep || 10,
       animationTime: this.customValues.animationTime || 1,
+      ifSpeed: this.customValues.ifSpeed || 0,
+      ifRpm: this.customValues.ifRpm || 0,
     };
   },
+  components:{
+    svgSpeedIcon,
+    svgRpmIcon,
+  },
+
   computed: {
     centerPoint() {
       return this.size / 2;
     },
-    outerCircleRadius() {
+    /*outerCircleRadius() {
       return this.size / 2 - this.size * 0.005; // 0.005 is a half of .outer-circle 'stroke-width' -> 0.5%
-    },
+    },*/
     needleCircleRadius() {
       return this.size / 14;
     },
@@ -137,18 +155,18 @@ export default {
   width: 400px;
   height: 400px;
 }
-.outer-circle {
-  fill: #f5f5f5;
-  stroke: #cbcbcb;
-  stroke-width: 2px;
-}
+/*.outer-circle {
+  fill: #1C1C1E;
+  stroke: #444446;
+  stroke-width: 4px;
+}*/
 .needle-circle{
-  fill: #ffffff;
-  stroke: #cbcbcb;
-  stroke-width: 1px;
+  fill: #14181B;
+  stroke: #1E252C;
+  stroke-width: 4px;
 }
 .speedometer-needle {
-  fill: #FE3816;
-  /*stroke-linejoin: round;*/
+  fill: #FF453A;
+  border-radius: 10px;
 }
 </style>
