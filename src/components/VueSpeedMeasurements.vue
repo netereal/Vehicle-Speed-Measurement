@@ -1,20 +1,17 @@
+/* eslint-disable */
 <template>
   <div class="main-container" >
     <svg class="svg-container">
-
       <svgSpeedIcon v-if="ifSpeed"/>
       <svgRpmIcon v-if="ifRpm"/>
-      <!--        id="speedAnimation"-->
-
       <polygon v-if="ifSpeed"
-        id="speedAnimation"
         :key="customCurrentValue"
         class="speedometer-needle"
+        id="speedAnimation"
         :points="setNeedlePointer()"
         :transform="
           `rotate(${currentValueInDegrees} ${centerPoint} ${centerPoint})`
-        "
-      >
+        ">
 <!--        <template v-if="needleAnimation" >
           <animateTransform
             attributeName="transform"
@@ -25,6 +22,17 @@
             :dur="`${this.animationTime}s`"
           />
         </template>-->
+      </polygon>
+
+      <polygon v-if="ifRpm"
+               id="rpmAnimation"
+               :key="customCurrentValue"
+               class="speedometer-needle"
+               :points="setNeedlePointer()"
+               :transform="
+          `rotate(${currentValueInDegrees} ${centerPoint} ${centerPoint})`
+        "
+      >
       </polygon>
 
       <circle
@@ -39,6 +47,9 @@
 </template>
 
 <script>
+
+
+
 import svgSpeedIcon from "./svg-speed-icon.vue";
 import svgRpmIcon from "./svg-rpm-icon.vue";
 export default {
@@ -58,6 +69,7 @@ export default {
       type: Boolean,
       default: true,
     },
+
   },
   data: function () {
     return {
@@ -71,7 +83,7 @@ export default {
       ifRpm: this.customValues.ifRpm || 0,
     };
   },
-  components:{
+  components: {
     svgSpeedIcon,
     svgRpmIcon,
   },
@@ -83,10 +95,10 @@ export default {
     needleCircleRadius() {
       return this.size / 14;
     },
-    scaleStartValue(){
+    scaleStartValue() {
       return this.scaleStartValue() || 0;
     },
-    scaleStep(){
+    scaleStep() {
       return this.scaleStep() || 20;
     },
     // Calculate current value in degrees for rotation the speed meter needle.
@@ -101,8 +113,8 @@ export default {
     },
   },
 
-  methods:{
-    degreesToRadians: function(radius, angleInDegrees) {
+  methods: {
+    degreesToRadians: function (radius, angleInDegrees) {
       // Convert from Degrees to Radians
       const angleInRadians = angleInDegrees * (Math.PI / 180);
       const x = this.centerPoint + radius * Math.cos(angleInRadians);
@@ -126,15 +138,29 @@ export default {
         this.degreesToRadians(topPointRadius, 135)
       );
     },
+  },
+  mounted() {
+    const rand = (min, max) => Math.floor(Math.random() * (max - min)) + min
 
+    $(document.querySelector('#rpmAnimation')).css('transform', 'rotate(' + 0 + 'deg)');
 
+    // set timeout
+    var tid = setTimeout(animateRpm, 2000);
+
+    function animateRpm() {
+      $(document.querySelector('#rpmAnimation')).css('transform', 'rotate(' + rand(0, 240) + 'deg)');
+      tid = setTimeout(animateRpm, 200); // repeat myself
+    }
+    function abortTimer() { // to be called when stop the timer
+      clearTimeout(tid);
+    }
   }
 }
 
 </script>
 
-<style scoped>
 
+<style scoped>
 .main-container {
   height: 400px;
   width: 400px;
@@ -153,23 +179,18 @@ export default {
   border-radius: 10px;
 }
 
-
 @keyframes customRotationSpeed {
-  0% {
-    transform: rotate(0deg);
-  }
-  28.57% {
-    transform: rotate(135deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
+  0% { transform: rotate(0deg); }
+  28.57% { transform: rotate(145deg); }
+  100% { transform: rotate(0deg); }
 }
-
-
 #speedAnimation {
   transform-origin: center center;
   animation: customRotationSpeed 7s infinite linear;
+}
+#rpmAnimation{
+  transform-origin: center center;
+  transition: all 0.6s ease-in-out;
 }
 
 </style>

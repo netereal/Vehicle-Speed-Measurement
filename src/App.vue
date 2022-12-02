@@ -1,13 +1,21 @@
+/* eslint-disable */
 <template>
   <div id="app">
-    <VueSpeed :customValues="customValuesSpeed" />
-    <VueRpm :customValues="customValuesRpm" />
+    <div class="container">
+      <div>
+        <VueSpeed :customValues="customValuesSpeed" />
+      </div>
+      <div>
+        <VueRpm :customValues="customValuesRpm" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import VueSpeed from "../components/VueSpeedMeasurements.vue";
-import VueRpm from "../components/VueSpeedMeasurements.vue";
+
+import VueSpeed from "../src/components/VueSpeedMeasurements.vue";
+import VueRpm from "../src/components/VueSpeedMeasurements.vue";
 
 export default {
   name: 'App',
@@ -50,4 +58,29 @@ export default {
 
 }
 </script>
+<style>
+html{
+  background-color: #030406;
+}
+.container{
+  margin: auto;
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-rows: repeat(2, 400px);
+}
+.container > div{
+  margin: auto;
+}
 
+@media only screen and (min-width: 900px) {
+  .container{
+    margin: auto;
+    width: 900px;
+    padding: 10px;
+  }
+  .container > div{
+    margin: auto;
+  }
+}
+</style>
