@@ -19,15 +19,16 @@ export default {
     return {
       customValuesRpm: {
         size: 400,
-        currentValue: 0,
-        scaleStartValue: -30,
-        scaleStep: 5,
-        animationTime: 3,
+        scaleStartValue: 0,
+        currentValue: 7,
+        scaleStep: 33.25,
+        scaleRange: 8,
+        animationTime: 1,
         ifRpm: 1,
       },
       customValuesSpeed: {
         size: 400,
-        currentValue: 90,
+        currentValue: 120,
         animationTime: 0.5,
         ifSpeed: 1,
       },

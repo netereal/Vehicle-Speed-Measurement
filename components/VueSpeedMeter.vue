@@ -4,14 +4,6 @@
 
       <svgSpeedIcon v-if="ifSpeed"/>
       <svgRpmIcon v-if="ifRpm"/>
-<!--      <SpeedSVG />-->
-<!--      <circle
-      class="outer-circle"
-      :r="outerCircleRadius"
-      :cx="centerPoint"
-      :cy="centerPoint"
-      />-->
-
       <polygon
         :key="customCurrentValue"
         class="speedometer-needle"
@@ -44,7 +36,6 @@
 </template>
 
 <script>
-/*import SpeedSVG from '../src/assets/SPEED.svg';*/
 import svgSpeedIcon from "./svg-speed-icon.vue";
 import svgRpmIcon from "./svg-rpm-icon.vue";
 export default {
@@ -64,17 +55,14 @@ export default {
       type: Boolean,
       default: true,
     },
-/*    speedOrRpm:{
-      type: Number,
-      default: 1,
-    },*/
   },
   data: function () {
     return {
       size: 400,
-      currentValue: this.customValues.currentValue || 45,
+      currentValue: this.customValues.currentValue || 0,
       scaleStartValue: this.customValues.scaleStartValue || 0,
-      scaleStep: this.customValues.scaleStep || 10,
+      scaleStep: this.customValues.scaleStep || 20,
+      scaleRange: this.customValues.scaleRange || 240,
       animationTime: this.customValues.animationTime || 1,
       ifSpeed: this.customValues.ifSpeed || 0,
       ifRpm: this.customValues.ifRpm || 0,
@@ -89,9 +77,6 @@ export default {
     centerPoint() {
       return this.size / 2;
     },
-    /*outerCircleRadius() {
-      return this.size / 2 - this.size * 0.005; // 0.005 is a half of .outer-circle 'stroke-width' -> 0.5%
-    },*/
     needleCircleRadius() {
       return this.size / 14;
     },
@@ -100,9 +85,6 @@ export default {
     },
     scaleStep(){
       return this.scaleStep() || 20;
-    },
-    scaleRange() {
-      return this.scaleStartValue + this.scaleStep * 12 - this.scaleStartValue;
     },
     // Calculate current value in degrees for rotation the speed meter needle.
     currentValueInDegrees() {
@@ -155,11 +137,6 @@ export default {
   width: 400px;
   height: 400px;
 }
-/*.outer-circle {
-  fill: #1C1C1E;
-  stroke: #444446;
-  stroke-width: 4px;
-}*/
 .needle-circle{
   fill: #14181B;
   stroke: #1E252C;
