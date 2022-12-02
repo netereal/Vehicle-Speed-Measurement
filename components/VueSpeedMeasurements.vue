@@ -1,10 +1,13 @@
 <template>
-  <div class="main-container">
+  <div class="main-container" >
     <svg class="svg-container">
 
       <svgSpeedIcon v-if="ifSpeed"/>
       <svgRpmIcon v-if="ifRpm"/>
-      <polygon
+      <!--        id="speedAnimation"-->
+
+      <polygon v-if="ifSpeed"
+        id="speedAnimation"
         :key="customCurrentValue"
         class="speedometer-needle"
         :points="setNeedlePointer()"
@@ -12,7 +15,7 @@
           `rotate(${currentValueInDegrees} ${centerPoint} ${centerPoint})`
         "
       >
-        <template v-if="needleAnimation">
+<!--        <template v-if="needleAnimation" >
           <animateTransform
             attributeName="transform"
             attributeType="XML"
@@ -21,7 +24,7 @@
             :to="`${currentValueInDegrees} ${centerPoint} ${centerPoint}`"
             :dur="`${this.animationTime}s`"
           />
-        </template>
+        </template>-->
       </polygon>
 
       <circle
@@ -39,7 +42,7 @@
 import svgSpeedIcon from "./svg-speed-icon.vue";
 import svgRpmIcon from "./svg-rpm-icon.vue";
 export default {
-  name: "VueSpeedMeter",
+  name: "VueSpeedMeasurements",
   props: {
     customValues: {
       type: Object,
@@ -97,6 +100,7 @@ export default {
       return 0;
     },
   },
+
   methods:{
     degreesToRadians: function(radius, angleInDegrees) {
       // Convert from Degrees to Radians
@@ -122,6 +126,8 @@ export default {
         this.degreesToRadians(topPointRadius, 135)
       );
     },
+
+
   }
 }
 
@@ -146,4 +152,24 @@ export default {
   fill: #FF453A;
   border-radius: 10px;
 }
+
+
+@keyframes customRotationSpeed {
+  0% {
+    transform: rotate(0deg);
+  }
+  28.57% {
+    transform: rotate(135deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+
+#speedAnimation {
+  transform-origin: center center;
+  animation: customRotationSpeed 7s infinite linear;
+}
+
 </style>
