@@ -1,4 +1,4 @@
-# vue-speed-mesurements
+# vue_speed_measurements
 
 > Vue App wich displays a Speedometer and a RP'm meter
 
